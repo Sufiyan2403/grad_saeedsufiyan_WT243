@@ -30,7 +30,7 @@ class SpringRestJpaApplicationTests {
 
 	    int status = result.getResponse().getStatus();
 
-	    assertEquals(200, status, "Product not found — test failed");
+	    assertEquals(200, status, "Employee found");
 	}
 	
 	@Test
@@ -44,7 +44,7 @@ class SpringRestJpaApplicationTests {
 
 	    int status = result.getResponse().getStatus();
 
-	    assertEquals(204, status, "Product not found — test failed");
+	    assertEquals(204, status, "Employee not found ");
 	}
 
 }
