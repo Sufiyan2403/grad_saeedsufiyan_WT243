@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a1628;
+            --blue: #1a56db;
+            --gold: #f59e0b;
+            --light: #f8fafc;
+            --muted: #64748b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .brand-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: white;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0;
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* NAV */
+        .navbar-nav-custom {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,255,255,0.12);
+            color: white;
+        }
+
+        .nav-btn.active {
+            border-bottom: 2px solid var(--gold);
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none;
+            background: transparent;
+            border: 1.5px solid rgba(255,255,255,0.3);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: #0d1e36;
+            padding: 8px 16px 12px;
+            gap: 4px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mobile-menu .nav-btn {
+            text-align: left;
+            width: 100%;
+        }
+
+        /* HERO / CONTENT */
+        .page-content {
+            flex: 1;
+            padding: 40px 20px;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            background: rgba(245,158,11,0.12);
+        }
+
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; left: 40px;
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            background: rgba(26,86,219,0.2);
+        }
+
+        .hero-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.85);
+            margin: 4px 4px 0 0;
+        }
+
+        .stat-pill span {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* FEATURE CARDS */
+        .feature-card {
+            background: white;
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.25s;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            border-color: var(--blue);
+            box-shadow: 0 8px 30px rgba(26,86,219,0.12);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 14px;
+        }
+
+        .feature-card h6 {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* SECTION TITLES */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        /* SERVICE TABS */
+        .service-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .service-tab {
+            background: #eff6ff;
+            color: var(--blue);
+            border: 1.5px solid #bfdbfe;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .service-tab:hover, .service-tab.active {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+
+        /* FORM CARDS */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .form-card h5 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .form-control, .form-select {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: border 0.2s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--blue), #1e40af);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            width: 100%;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary-custom:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(26,86,219,0.3);
+        }
+
+        /* RESULT BOX */
+        .result-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 4px solid var(--blue);
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-top: 18px;
+        }
+
+        .result-box p {
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: #1e3a5f;
+        }
+
+        .result-box p:last-child { margin: 0; }
+
+        .result-box strong { color: var(--navy); }
+
+        /* ABOUT / CONTACT */
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .contact-item:last-child { border: none; padding-bottom: 0; }
+
+        .contact-icon {
+            width: 44px; height: 44px;
+            background: #eff6ff;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--navy);
+            color: #94a3b8;
+            text-align: center;
+            padding: 16px;
+            font-size: 0.82rem;
+            letter-spacing: 0.3px;
+        }
+
+        .footer strong { color: var(--gold); }
+
+        /* LEFT SIDEBAR NAV */
+        .left-sidebar {
+            width: 200px;
+            flex-shrink: 0;
+            background: #0d1e36;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 12px;
+            gap: 4px;
+            min-height: calc(100vh - 72px);
+        }
+
+        .left-sidebar .nav-btn {
+            text-align: left;
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+
+        .body-wrap {
+            display: flex;
+            flex: 1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .left-sidebar { display: none; }
+            .hamburger { display: flex; }
+            .page-content { padding: 24px 16px; }
+            .hero-card { padding: 28px 22px; }
+            .hero-card h2 { font-size: 1.5rem; }
+            .form-card { padding: 20px; }
+        }
+
+        @media (max-width: 576px) {
+            .header-inner { padding: 12px 16px; }
+            .brand-text h1 { font-size: 1.2rem; }
+        }
+
+        /* NET BANKING TABS */
+        .auth-tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+            gap: 4px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: var(--muted);
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: var(--navy);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body onload="showHome()">
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-inner">
+        <div class="brand">
+            <div class="brand-icon">🏦</div>
+            <div class="brand-text">
+                <h1>OUR BANK</h1>
+                <p>Banking at your Doorstep</p>
+            </div>
+        </div>
+
+        <button class="hamburger" onclick="toggleMenu()" id="hamburger">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="nav-btn" onclick="showHome(); closeMobile()">🏠 Home</button>
+        <button class="nav-btn" onclick="showAbout(); closeMobile()">ℹ️ About Us</button>
+        <button class="nav-btn" onclick="showServices(); closeMobile()">⚙️ Services</button>
+        <button class="nav-btn" onclick="showNetBanking(); closeMobile()">💻 Net Banking</button>
+        <button class="nav-btn" onclick="showContact(); closeMobile()">📞 Contact Us</button>
+    </div>
+</div>
+
+<!-- BODY WRAP -->
+<div class="body-wrap">
+
+<!-- LEFT SIDEBAR NAV -->
+<div class="left-sidebar">
+    <button class="nav-btn" id="nav-home" onclick="showHome()">🏠 Home</button>
+    <button class="nav-btn" id="nav-about" onclick="showAbout()">ℹ️ About</button>
+    <button class="nav-btn" id="nav-services" onclick="showServices()">⚙️ Services</button>
+    <button class="nav-btn" id="nav-netbanking" onclick="showNetBanking()">💻 Net Banking</button>
+    <button class="nav-btn" id="nav-contact" onclick="showContact()">📞 Contact</button>
+</div>
+
+<!-- CONTENT -->
+<div class="page-content">
+    <div class="container" id="contentArea"></div>
+</div>
+
+</div><!-- end body-wrap -->
+
+<!-- FOOTER -->
+<div class="footer">
+    <strong>www.ourbank.com</strong> &nbsp;|&nbsp; © Copyright. All rights reserved.
+</div>
+
+<script>
+    const content = document.getElementById("contentArea");
+
+    function setActiveNav(id) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        const el = document.getElementById('nav-' + id);
+        if (el) el.classList.add('active');
+    }
+
+    function toggleMenu() {
+        const m = document.getElementById('mobileMenu');
+        m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function closeMobile() {
+        document.getElementById('mobileMenu').style.display = 'none';
+    }
+
+    function showHome() {
+        setActiveNav('home');
+        content.innerHTML = `
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="hero-card">
+                        <h2>Welcome to Our Bank</h2>
+                        <p style="color:rgba(255,255,255,0.75); max-width:480px; margin-bottom:20px;">
+                            Trusted by millions, we deliver secure, modern banking — from loans to deposits and beyond.
+                        </p>
+                        <div>
+                            <div class="stat-pill">👥 <span>5M+</span> Customers</div>
+                            <div class="stat-pill">🔒 <span>100%</span> Secure</div>
+                            <div class="stat-pill">⭐ <span>4.9</span> Rated</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-2">
+                    <h5 class="fw-semibold text-secondary mb-3" style="font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase;">Our Services</h5>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card" onclick="showServices(); setTimeout(showLoan,50)">
+                        <div class="feature-icon">🏠</div>
+                        <h6>Loan</h6>
+                        <p>Home, car & personal loan with competitive EMI rates</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card" onclick="showServices(); setTimeout(showDeposit,50)">
+                        <div class="feature-icon">💰</div>
+                        <h6>Deposit</h6>
+                        <p>Fixed & recurring deposits with great returns</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card" onclick="showServices(); setTimeout(showAccount,50)">
+                        <div class="feature-icon">📋</div>
+                        <h6>Account Opening</h6>
+                        <p>Open savings or current accounts instantly online</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function showAbout() {
+        setActiveNav('about');
+        content.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <h2 class="section-title">About Us</h2>
+                    <p class="section-sub">Learn what makes Our Bank different</p>
+                    <div class="info-card">
+                        <p style="color:#374151; line-height:1.8; font-size:0.95rem;">
+                            Our Bank is trusted by <strong>millions of customers</strong> across the country. We are committed to providing reliable, secure, and convenient banking services that fit your lifestyle.
+                        </p>
+                        <div class="row g-3 mt-2">
+                            <div class="col-6">
+                                <div style="background:#f8fafc; border-radius:12px; padding:16px; text-align:center;">
+                                    <div style="font-size:1.8rem; font-weight:700; color:var(--blue);">25+</div>
+                                    <div style="font-size:0.8rem; color:var(--muted);">Years of Service</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div style="background:#f8fafc; border-radius:12px; padding:16px; text-align:center;">
+                                    <div style="font-size:1.8rem; font-weight:700; color:var(--blue);">500+</div>
+                                    <div style="font-size:0.8rem; color:var(--muted);">Branches Nationwide</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function showContact() {
+        setActiveNav('contact');
+        content.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Contact Us</h2>
+                    <p class="section-sub">We're here to help you anytime</p>
+                    <div class="info-card">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <div style="font-weight:600; color:var(--navy); font-size:0.9rem;">Email Support</div>
+                                <div style="color:var(--muted); font-size:0.85rem;">support@ourbank.com</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div>
+                                <div style="font-weight:600; color:var(--navy); font-size:0.9rem;">Phone</div>
+                                <div style="color:var(--muted); font-size:0.85rem;">+91 9876543210</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕐</div>
+                            <div>
+                                <div style="font-weight:600; color:var(--navy); font-size:0.9rem;">Working Hours</div>
+                                <div style="color:var(--muted); font-size:0.85rem;">Mon–Sat: 9 AM – 6 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function showServices() {
+        setActiveNav('services');
+        content.innerHTML = `
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-sub">Choose a service to get started</p>
+            <div class="service-tabs">
+                <button class="service-tab active" id="tab-loan" onclick="activateTab('loan'); showLoan()">🏠 Loan</button>
+                <button class="service-tab" id="tab-deposit" onclick="activateTab('deposit'); showDeposit()">💰 Deposit</button>
+                <button class="service-tab" id="tab-account" onclick="activateTab('account'); showAccount()">📋 Account Opening</button>
+            </div>
+            <div id="serviceArea"></div>
+        `;
+        showLoan();
+    }
+
+    function activateTab(name) {
+        document.querySelectorAll('.service-tab').forEach(t => t.classList.remove('active'));
+        const el = document.getElementById('tab-' + name);
+        if (el) el.classList.add('active');
+    }
+
+    function showLoan() {
+        const area = document.getElementById("serviceArea");
+        if (!area) return;
+        area.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="form-card">
+                        <h5>Loan EMI Calculator</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Applicant Name</label>
+                            <input type="text" id="username" class="form-control" placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Loan Type</label>
+                            <select id="loanType" class="form-select">
+                                <option value="">-- Select --</option>
+                                <option value="home">Home</option>
+                                <option value="car">Car</option>
+                                <option value="personal">Personal</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Loan Amount (₹)</label>
+                            <input type="number" id="amount" class="form-control" placeholder="Enter amount">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Duration (Years)</label>
+                            <input type="number" id="years" class="form-control" placeholder="Enter duration">
+                        </div>
+                        <button class="btn-primary-custom" onclick="calculateEMI()">Calculate EMI</button>
+                        <div id="result"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function calculateEMI() {
+        let type = document.getElementById("loanType").value;
+        let amount = parseFloat(document.getElementById("amount").value);
+        let years = parseFloat(document.getElementById("years").value);
+        let name = document.getElementById("username").value;
+
+        if (name === "" || type === "" || isNaN(amount) || isNaN(years)) {
+            alert("Please enter all fields properly.");
+            return;
+        }
+
+        let rate;
+        if (type === "home") {
+            if (amount <= 500000 || years > 30) { alert("Home Loan: Amount > 5L & Duration <= 30 years"); return; }
+            rate = 9;
+        } else if (type === "car") {
+            if (amount <= 100000 || years > 7) { alert("Car Loan: Amount > 1L & Duration <= 7 years"); return; }
+            rate = 12;
+        } else if (type === "personal") {
+            if (amount <= 10000 || years > 5) { alert("Personal Loan: Amount > 10K & Duration <= 5 years"); return; }
+            rate = 15;
+        }
+
+        let monthlyRate = rate / (12 * 100);
+        let months = years * 12;
+        let emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+
+        document.getElementById("result").innerHTML = `
+            <div class="result-box">
+                <p>👋 Hello, <strong>${name}</strong></p>
+                <p>Interest Rate: <strong>${rate}% p.a.</strong></p>
+                <p>Monthly EMI: <strong style="font-size:1.1rem; color:var(--blue);">₹${emi.toFixed(2)}</strong></p>
+            </div>
+        `;
+    }
+
+    function showDeposit() {
+        const area = document.getElementById("serviceArea");
+        if (!area) return;
+        area.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="form-card">
+                        <h5>Deposit Form</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" id="depName" class="form-control" placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deposit Type</label>
+                            <select id="depType" class="form-select">
+                                <option value="FD">Fixed Deposit</option>
+                                <option value="RD">Recurring Deposit</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Amount (₹)</label>
+                            <input type="number" id="depAmount" class="form-control" placeholder="Enter amount">
+                        </div>
+                        <button class="btn-primary-custom" onclick="submitDeposit()">Submit Deposit</button>
+                        <div id="depResult"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function submitDeposit() {
+        let name = document.getElementById("depName").value;
+        let type = document.getElementById("depType").value;
+        let amount = document.getElementById("depAmount").value;
+
+        if (name === "" || amount === "") { alert("Fill all deposit details"); return; }
+
+        document.getElementById("depResult").innerHTML = `
+            <div class="result-box">
+                <p>✅ <strong>Deposit Successful!</strong></p>
+                <p>Name: <strong>${name}</strong></p>
+                <p>Type: <strong>${type}</strong></p>
+                <p>Amount: <strong>₹${amount}</strong></p>
+            </div>
+        `;
+    }
+
+    function showAccount() {
+        const area = document.getElementById("serviceArea");
+        if (!area) return;
+        area.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="form-card">
+                        <h5>Account Opening Form</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="accName" class="form-control" placeholder="Enter full name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="accEmail" class="form-control" placeholder="Enter email">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Account Type</label>
+                            <select id="accType" class="form-select">
+                                <option>Savings</option>
+                                <option>Current</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary-custom" onclick="openAccount()">Open Account</button>
+                        <div id="accResult"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function openAccount() {
+        let name = document.getElementById("accName").value;
+        let email = document.getElementById("accEmail").value;
+        let type = document.getElementById("accType").value;
+
+        if (name === "" || email === "") { alert("Please fill all details"); return; }
+
+        document.getElementById("accResult").innerHTML = `
+            <div class="result-box">
+                <p>✅ <strong>Account Created Successfully!</strong></p>
+                <p>Name: <strong>${name}</strong></p>
+                <p>Account Type: <strong>${type}</strong></p>
+            </div>
+        `;
+    }
+
+    function showNetBanking() {
+        setActiveNav('netbanking');
+        content.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-7">
+                    <h2 class="section-title">Net Banking</h2>
+                    <p class="section-sub">Secure access to your account</p>
+                    <div class="form-card">
+                        <div class="auth-tabs">
+                            <button class="auth-tab active" id="tab-login" onclick="switchAuth('login')">Login</button>
+                            <button class="auth-tab" id="tab-signup" onclick="switchAuth('signup')">Sign Up</button>
+                        </div>
+                        <div id="bankForm"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        renderLogin();
+    }
+
+    function switchAuth(type) {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-' + type).classList.add('active');
+        if (type === 'login') renderLogin(); else renderSignup();
+    }
+
+    function renderLogin() {
+        document.getElementById("bankForm").innerHTML = `
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" id="loginUser" class="form-control" placeholder="Enter username">
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" id="loginPass" class="form-control" placeholder="Enter password">
+            </div>
+            <button class="btn-primary-custom" onclick="validateLogin()">Login →</button>
+        `;
+    }
+
+    function renderSignup() {
+        document.getElementById("bankForm").innerHTML = `
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="signName" class="form-control" placeholder="Enter name">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" id="signEmail" class="form-control" placeholder="Enter email">
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" id="signPass" class="form-control" placeholder="Create password">
+            </div>
+            <button class="btn-primary-custom" onclick="validateSignup()">Create Account →</button>
+        `;
+    }
+
+    function validateLogin() {
+        let username = document.getElementById("loginUser").value;
+        let password = document.getElementById("loginPass").value;
+        if (username.length < 4) { alert("Username must be at least 4 characters."); return; }
+        if (password.length < 6) { alert("Password must be at least 6 characters."); return; }
+        alert("Login Successful");
+    }
+
+    function validateSignup() {
+        let name = document.getElementById("signName").value;
+        let email = document.getElementById("signEmail").value;
+        let password = document.getElementById("signPass").value;
+        if (name.length < 4) { alert("Name must be at least 4 characters."); return; }
+        if (!email.includes("@")) { alert("Please enter a valid email."); return; }
+        if (password.length < 6) { alert("Password must be at least 6 characters."); return; }
+        alert("Account Created Successfully");
+    }
+</script>
+
+</body>
+</html>
