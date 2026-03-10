@@ -1,0 +1,29 @@
+<h2>All Students</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Reg No</th>
+      <th>Roll No</th>
+      <th>Name</th>
+      <th>Standard</th>
+      <th>School</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of students">
+      <td>{{ s.regNo }}</td>
+      <td>{{ s.rollNo }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.standard }}</td>
+      <td>{{ s.school }}</td>
+      <td>
+        <button (click)="goToUpdate(s.regNo)">Edit</button>
+        <button (click)="delete(s.regNo)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="students.length === 0">No students found.</p>

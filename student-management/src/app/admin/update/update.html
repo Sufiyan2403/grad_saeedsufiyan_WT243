@@ -1,0 +1,29 @@
+<h2>Update Student</h2>
+
+<div>
+  <label>Reg No:</label>
+  <input type="text" [(ngModel)]="student.regNo" disabled />
+</div>
+
+<div>
+  <label>Roll No:</label>
+  <input type="number" [(ngModel)]="student.rollNo" />
+</div>
+
+<div>
+  <label>Name:</label>
+  <input type="text" [(ngModel)]="student.name" />
+</div>
+
+<div>
+  <label>Standard:</label>
+  <input type="text" [(ngModel)]="student.standard" />
+</div>
+
+<div>
+  <label>School:</label>
+  <input type="text" [(ngModel)]="student.school" />
+</div>
+
+<button (click)="onSubmit()">Update Student</button>
+<button (click)="goBack()">Cancel</button>
