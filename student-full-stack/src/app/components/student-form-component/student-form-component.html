@@ -1,0 +1,121 @@
+<div class="form-page">
+
+  <!-- Loading Spinner -->
+  <div class="spinner-container" *ngIf="isLoading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <mat-card class="form-card" *ngIf="!isLoading">
+
+    <!-- Header -->
+    <div class="form-header">
+      <button mat-icon-button (click)="onCancel()" matTooltip="Back to Students">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2 class="form-title">{{ isEditMode ? 'Edit Student' : 'Add New Student' }}</h2>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <form class="student-form" #studentForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-row">
+          <!-- Regno -->
+          <mat-form-field appearance="outline">
+            <mat-label>Regno</mat-label>
+            <input matInput type="number"
+              [(ngModel)]="student.regno"
+              name="regno"
+              required
+              [readonly]="isEditMode" />
+            <mat-hint *ngIf="isEditMode">Cannot change Regno in edit mode</mat-hint>
+          </mat-form-field>
+
+          <!-- Roll No -->
+          <mat-form-field appearance="outline">
+            <mat-label>Roll No</mat-label>
+            <input matInput type="number"
+              [(ngModel)]="student.rollno"
+              name="rollno"
+              required />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <!-- Name -->
+          <mat-form-field appearance="outline">
+            <mat-label>Full Name</mat-label>
+            <input matInput
+              [(ngModel)]="student.name"
+              name="name"
+              required
+              placeholder="e.g. John Doe" />
+          </mat-form-field>
+
+          <!-- Gender -->
+          <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+            <mat-select [(ngModel)]="student.gender" name="gender" required>
+              <mat-option value="Male">Male</mat-option>
+              <mat-option value="Female">Female</mat-option>
+              <mat-option value="Other">Other</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <!-- Standard -->
+          <mat-form-field appearance="outline">
+            <mat-label>Standard</mat-label>
+            <input matInput
+              [(ngModel)]="student.standard"
+              name="standard"
+              required
+              placeholder="e.g. 10th" />
+          </mat-form-field>
+
+          <!-- School -->
+          <mat-form-field appearance="outline">
+            <mat-label>School</mat-label>
+            <input matInput
+              [(ngModel)]="student.school"
+              name="school"
+              required
+              placeholder="e.g. Oxford High School" />
+          </mat-form-field>
+        </div>
+
+        <div class="form-row single">
+          <!-- Percentage -->
+          <mat-form-field appearance="outline">
+            <mat-label>Percentage</mat-label>
+            <input matInput type="number"
+              [(ngModel)]="student.percentage"
+              name="percentage"
+              required
+              min="0" max="100"
+              placeholder="e.g. 75.5" />
+            <mat-hint>Enter value between 0 and 100</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="onCancel()">
+            <mat-icon>close</mat-icon> Cancel
+          </button>
+          <button mat-raised-button color="primary"
+            type="submit"
+            [disabled]="studentForm.invalid || isSaving">
+            <mat-spinner diameter="18" *ngIf="isSaving"></mat-spinner>
+            <mat-icon *ngIf="!isSaving">{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+            {{ isSaving ? 'Saving...' : (isEditMode ? 'Update Student' : 'Add Student') }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+
+  </mat-card>
+</div>

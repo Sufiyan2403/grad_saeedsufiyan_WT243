@@ -1,0 +1,148 @@
+<div class="filter-page">
+
+  <h2 class="page-title">Filter Students</h2>
+
+  <!-- Toggle Buttons -->
+  <div class="filter-toggle">
+    <button mat-raised-button
+      [color]="activeFilter === 'school' ? 'primary' : ''"
+      (click)="switchFilter('school')">
+      <mat-icon>account_balance</mat-icon> By School
+    </button>
+    <button mat-raised-button
+      [color]="activeFilter === 'result' ? 'primary' : ''"
+      (click)="switchFilter('result')">
+      <mat-icon>fact_check</mat-icon> By Result
+    </button>
+  </div>
+
+  <!-- School Filter -->
+  <mat-card class="filter-card" *ngIf="activeFilter === 'school'">
+    <mat-card-title>Search by School</mat-card-title>
+    <mat-card-content>
+      <div class="filter-inputs">
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>School Name</mat-label>
+          <input matInput
+            [(ngModel)]="schoolName"
+            placeholder="e.g. Oxford High School"
+            (keyup.enter)="fetchBySchool()" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary"
+          (click)="fetchBySchool()"
+          [disabled]="!schoolName || isLoading">
+          <mat-spinner diameter="18" *ngIf="isLoading"></mat-spinner>
+          <mat-icon *ngIf="!isLoading">search</mat-icon>
+          {{ isLoading ? 'Searching...' : 'Search' }}
+        </button>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Result Filter -->
+  <mat-card class="filter-card" *ngIf="activeFilter === 'result'">
+    <mat-card-title>Filter by Result</mat-card-title>
+    <mat-card-content>
+      <div class="filter-inputs">
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Result</mat-label>
+          <mat-select [(ngModel)]="passFilter">
+            <mat-option [value]="true">Passed (≥ 40%)</mat-option>
+            <mat-option [value]="false">Failed (< 40%)</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary"
+          (click)="fetchByResult()"
+          [disabled]="isLoading">
+          <mat-spinner diameter="18" *ngIf="isLoading"></mat-spinner>
+          <mat-icon *ngIf="!isLoading">filter_list</mat-icon>
+          {{ isLoading ? 'Loading...' : 'Apply Filter' }}
+        </button>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Spinner -->
+  <div class="spinner-container" *ngIf="isLoading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <!-- Results Table -->
+  <mat-card class="table-card" *ngIf="!isLoading && hasSearched">
+
+    <div class="results-header">
+      <span class="results-count">
+        <mat-icon>info</mat-icon>
+        {{ students.length }} student(s) found
+      </span>
+    </div>
+
+    <table mat-table [dataSource]="students" class="filter-table" *ngIf="students.length > 0">
+
+      <!-- Regno -->
+      <ng-container matColumnDef="regno">
+        <th mat-header-cell *matHeaderCellDef>Regno</th>
+        <td mat-cell *matCellDef="let s">{{ s.regno }}</td>
+      </ng-container>
+
+      <!-- Rollno -->
+      <ng-container matColumnDef="rollno">
+        <th mat-header-cell *matHeaderCellDef>Roll No</th>
+        <td mat-cell *matCellDef="let s">{{ s.rollno }}</td>
+      </ng-container>
+
+      <!-- Name -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let s">{{ s.name }}</td>
+      </ng-container>
+
+      <!-- Gender -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let s">{{ s.gender }}</td>
+      </ng-container>
+
+      <!-- Standard -->
+      <ng-container matColumnDef="standard">
+        <th mat-header-cell *matHeaderCellDef>Standard</th>
+        <td mat-cell *matCellDef="let s">{{ s.standard }}</td>
+      </ng-container>
+
+      <!-- School -->
+      <ng-container matColumnDef="school">
+        <th mat-header-cell *matHeaderCellDef>School</th>
+        <td mat-cell *matCellDef="let s">{{ s.school }}</td>
+      </ng-container>
+
+      <!-- Percentage -->
+      <ng-container matColumnDef="percentage">
+        <th mat-header-cell *matHeaderCellDef>Percentage</th>
+        <td mat-cell *matCellDef="let s">
+          <span class="badge" [ngClass]="s.percentage >= 40 ? 'pass' : 'fail'">
+            {{ s.percentage }}% — {{ getPassStatus(s.percentage) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+
+    </table>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="students.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>No students found for this filter.</p>
+    </div>
+
+  </mat-card>
+
+</div>

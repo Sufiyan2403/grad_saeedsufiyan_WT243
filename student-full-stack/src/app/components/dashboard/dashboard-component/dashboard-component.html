@@ -1,0 +1,112 @@
+<div class="dashboard">
+
+  <h2 class="page-title">Dashboard</h2>
+
+  <!-- Summary Cards -->
+  <div class="cards-row">
+
+    <mat-card class="stat-card total">
+      <mat-card-content>
+        <mat-icon>groups</mat-icon>
+        <div class="stat-info">
+          <span class="stat-label">Total Students</span>
+          <span class="stat-value">{{ totalStudents }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card passed">
+      <mat-card-content>
+        <mat-icon>check_circle</mat-icon>
+        <div class="stat-info">
+          <span class="stat-label">Passed</span>
+          <span class="stat-value">{{ totalPassed }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card failed">
+      <mat-card-content>
+        <mat-icon>cancel</mat-icon>
+        <div class="stat-info">
+          <span class="stat-label">Failed</span>
+          <span class="stat-value">{{ totalFailed }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <!-- Query Section -->
+  <div class="query-row">
+
+    <!-- Strength by Gender + Standard -->
+    <mat-card class="query-card">
+      <mat-card-title>Student Strength</mat-card-title>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select [(ngModel)]="strengthGender">
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Standard</mat-label>
+          <input matInput [(ngModel)]="strengthStandard" placeholder="e.g. 10th" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="fetchStrength()">
+          <mat-icon>search</mat-icon> Get Strength
+        </button>
+
+        <div class="result-badge" *ngIf="strengthResult !== null">
+          <mat-icon>people</mat-icon>
+          Count: <strong>{{ strengthResult }}</strong>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Count by School -->
+    <mat-card class="query-card">
+      <mat-card-title>Count by School</mat-card-title>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>School Name</mat-label>
+          <input matInput [(ngModel)]="schoolCountName" placeholder="e.g. Oxford High" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="fetchSchoolCount()">
+          <mat-icon>search</mat-icon> Get Count
+        </button>
+
+        <div class="result-badge" *ngIf="schoolCountResult !== null">
+          <mat-icon>account_balance</mat-icon>
+          Count: <strong>{{ schoolCountResult }}</strong>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Count by Standard -->
+    <mat-card class="query-card">
+      <mat-card-title>Count by Standard</mat-card-title>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Standard</mat-label>
+          <input matInput [(ngModel)]="standardCountName" placeholder="e.g. 10th" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="fetchStandardCount()">
+          <mat-icon>search</mat-icon> Get Count
+        </button>
+
+        <div class="result-badge" *ngIf="standardCountResult !== null">
+          <mat-icon>class</mat-icon>
+          Count: <strong>{{ standardCountResult }}</strong>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

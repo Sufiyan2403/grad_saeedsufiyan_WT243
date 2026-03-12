@@ -1,0 +1,65 @@
+.form-page {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+  padding: 8px;
+}
+
+/* Header */
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 16px;
+}
+
+.form-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+/* Form */
+.student-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 8px 8px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row mat-form-field {
+  flex: 1;
+}
+
+.form-row.single mat-form-field {
+  flex: 0 0 calc(50% - 8px);
+}
+
+/* Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}

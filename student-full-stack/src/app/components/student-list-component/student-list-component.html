@@ -1,0 +1,108 @@
+<div class="student-list">
+
+  <div class="list-header">
+    <h2 class="page-title">All Students</h2>
+    <button mat-raised-button color="primary" (click)="addStudent()">
+      <mat-icon>add</mat-icon> Add Student
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <mat-card class="search-card">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search by name, school, standard or regno</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="applySearch()" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <button mat-stroked-button (click)="clearSearch()" *ngIf="searchTerm">
+      <mat-icon>clear</mat-icon> Clear
+    </button>
+  </mat-card>
+
+  <!-- Loading Spinner -->
+  <div class="spinner-container" *ngIf="isLoading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <!-- Table -->
+  <mat-card class="table-card" *ngIf="!isLoading">
+    <table mat-table [dataSource]="filteredStudents" class="student-table">
+
+      <!-- Regno -->
+      <ng-container matColumnDef="regno">
+        <th mat-header-cell *matHeaderCellDef>Regno</th>
+        <td mat-cell *matCellDef="let s">{{ s.regno }}</td>
+      </ng-container>
+
+      <!-- Rollno -->
+      <ng-container matColumnDef="rollno">
+        <th mat-header-cell *matHeaderCellDef>Roll No</th>
+        <td mat-cell *matCellDef="let s">{{ s.rollno }}</td>
+      </ng-container>
+
+      <!-- Name -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let s">{{ s.name }}</td>
+      </ng-container>
+
+      <!-- Gender -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let s">{{ s.gender }}</td>
+      </ng-container>
+
+      <!-- Standard -->
+      <ng-container matColumnDef="standard">
+        <th mat-header-cell *matHeaderCellDef>Standard</th>
+        <td mat-cell *matCellDef="let s">{{ s.standard }}</td>
+      </ng-container>
+
+      <!-- School -->
+      <ng-container matColumnDef="school">
+        <th mat-header-cell *matHeaderCellDef>School</th>
+        <td mat-cell *matCellDef="let s">{{ s.school }}</td>
+      </ng-container>
+
+      <!-- Percentage -->
+      <ng-container matColumnDef="percentage">
+        <th mat-header-cell *matHeaderCellDef>Percentage</th>
+        <td mat-cell *matCellDef="let s">
+          <span class="badge" [ngClass]="s.percentage >= 40 ? 'pass' : 'fail'">
+            {{ s.percentage }}% — {{ getPassStatus(s.percentage) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let s">
+          <button mat-icon-button color="primary"
+            matTooltip="Edit Student"
+            (click)="editStudent(s.regno)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn"
+            matTooltip="Delete Student"
+            (click)="deleteStudent(s.regno)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          class="table-row"></tr>
+
+    </table>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredStudents.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>No students found.</p>
+    </div>
+
+  </mat-card>
+
+</div>

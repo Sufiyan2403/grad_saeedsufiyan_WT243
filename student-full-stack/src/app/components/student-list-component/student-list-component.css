@@ -1,0 +1,106 @@
+.student-list {
+  padding: 8px 0;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+/* Search */
+.search-card {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+}
+
+.search-field {
+  flex: 1;
+  margin-bottom: -1.25em;
+}
+
+/* Spinner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+/* Table */
+.table-card {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.student-table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  background-color: #1976d2;
+  color: white !important;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 14px 16px !important;
+}
+
+td.mat-cell {
+  padding: 12px 16px !important;
+  font-size: 14px;
+  color: #333;
+}
+
+.table-row:hover {
+  background-color: #f0f4ff;
+  transition: background 0.2s;
+}
+
+/* Pass/Fail Badge */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.pass {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge.fail {
+  background-color: #fdecea;
+  color: #c62828;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px;
+  color: #999;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+}

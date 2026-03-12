@@ -1,0 +1,26 @@
+<div class="app-shell">
+
+  <!-- Top Navbar -->
+  <mat-toolbar color="primary" class="navbar">
+    <mat-icon class="brand-icon">school</mat-icon>
+    <span class="brand-title">Student Management System</span>
+    <span class="spacer"></span>
+
+    <button mat-button routerLink="/dashboard" routerLinkActive="active-link">
+      <mat-icon>dashboard</mat-icon> Dashboard
+    </button>
+    <button mat-button routerLink="/students" routerLinkActive="active-link">
+      <mat-icon>people</mat-icon> Students
+    </button>
+    <button mat-button routerLink="/filter" routerLinkActive="active-link">
+      <mat-icon>filter_list</mat-icon> Filter
+    </button>
+
+  </mat-toolbar>
+
+  <!-- Page Content -->
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
